@@ -9,4 +9,8 @@ public class Product {
     private int id;
     private int cost;
     private String name;
+
+    public boolean matches(String search) {
+        return getName().contains(search);
+    }
 }
