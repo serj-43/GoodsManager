@@ -1,10 +1,12 @@
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
+
 @AllArgsConstructor
+@Getter
 public class Product {
-    private int cost;
     private int id;
+    private int cost;
     private String name;
 }
