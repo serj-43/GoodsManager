@@ -1,6 +1,8 @@
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public class ProductsTest {
     Book firstBook = new Book(1, 100, "Around the World in 80 days", "J.Vern");
     Book secondBook = new Book(2, 120, "Matrin Iden", "J.London");
@@ -31,7 +33,7 @@ public class ProductsTest {
         bookmanager.add(secondBook);
         bookmanager.add(thirdBook);
         bookmanager.add(forthBook);
-        boolean logic = bookrepository.removeById(2);
+        bookrepository.removeById(2);
         Product[] actual = bookrepository.findAll();
         Assertions.assertArrayEquals(expected, actual);
     }
@@ -39,22 +41,22 @@ public class ProductsTest {
     @Test
     public void RemoveZeroBook() {
         ProductRepo bookrepository = new ProductRepo();
-        boolean expected = false;
-        boolean actual = bookrepository.removeById(2);
-        Assertions.assertEquals(expected, actual);
+        assertThrows(NotFoundException.class, () -> {
+            bookrepository.removeById(2);
+        });
     }
 
     @Test
     public void RemoveBookNegId() {
         ProductRepo bookrepository = new ProductRepo();
         ProductManager bookmanager = new ProductManager(bookrepository);
-        boolean expected = false;
         bookmanager.add(firstBook);
         bookmanager.add(secondBook);
         bookmanager.add(thirdBook);
         bookmanager.add(forthBook);
-        boolean actual = bookrepository.removeById(100);
-        Assertions.assertEquals(expected, actual);
+        assertThrows(NotFoundException.class, () -> {
+            bookrepository.removeById(-100);
+        });
     }
 
     @Test

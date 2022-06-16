@@ -15,22 +15,29 @@ public class ProductRepo {
         items = tmp;
     }
 
-    public boolean removeById(int id) {
-        if (items.length > 0) {
-            int copyIndex = 0;
-            Product[] tmp = new Product[items.length - 1];
-            for (int i = 0; i < items.length; i++) {
-                if (items[i].getId() != id) {
-                    if (copyIndex == tmp.length) {
-                        return false;
-                    }
-                    tmp[copyIndex] = items[i];
-                    copyIndex++;
-                }
+    public Product findById(int id) {
+        for (int i = 0; i < items.length; i++) {
+            if (items[i].getId() == id) {
+                return items[i];
             }
-            items = tmp;
-            return true;
-        } else return false;
+        }
+        return null;
+    }
+
+    public void removeById(int id) {
+            if (this.findById(id) == null) {
+                throw new NotFoundException("Не найден элемент с id: " + id);
+            } else {
+                int copyIndex = 0;
+                Product[] tmp = new Product[items.length - 1];
+                for (int i = 0; i < items.length; i++) {
+                    if (items[i].getId() != id) {
+                        tmp[copyIndex] = items[i];
+                        copyIndex++;
+                    }
+                }
+                items = tmp;
+            }
     }
 }
 
