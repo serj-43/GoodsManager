@@ -13,6 +13,7 @@ public class ProductsTest {
     Smartphone phone2 = new Smartphone(88, 30_000, "Galaxy II", "Samsung");
     Smartphone phone3 = new Smartphone(8, 20_000, "XG", "LG");
     Smartphone phone4 = new Smartphone(6, 10_000, "Redmi", "Xiaomi");
+    Smartphone phone5 = new Smartphone(88, 10_000, "Redmi", "Xiaomi");
 
     @Test
     public void AddBook() {
@@ -83,6 +84,20 @@ public class ProductsTest {
         phonemanager.add(phone4);
         Product[] actual = phonemanager.searchBy("netology");
         Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void AddExistingId() {
+        ProductRepo phonerepository = new ProductRepo();
+        ProductManager phonemanager = new ProductManager(phonerepository);
+        Product[] expected = {};
+        phonemanager.add(phone1);
+        phonemanager.add(phone2);
+        phonemanager.add(phone3);
+        phonemanager.add(phone4);
+        assertThrows(AlreadyExistsException.class, () -> {
+            phonemanager.add(phone5);
+        });
     }
 }
 
